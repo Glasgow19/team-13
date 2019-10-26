@@ -9,9 +9,9 @@ $(document).ready(() => {
     for (var i = 1; i <= 35; i++) {
         
         if (i <= start_pos || i > end_pos) {
-            row_html += '<td><a data-index=' + '#' + '>' + '#'+ '</a></td>';
+            row_html += '<td>' + '' + '</td>';
         } else {
-            row_html += '<td>' + ((i - start_pos) )+ '</td>';
+            row_html += '<td><p>' + (i - start_pos) + '</p></td>';
         }
         if (i % 7  == 0) {
             $table_body.append('<tr>' + row_html + '</tr>');
