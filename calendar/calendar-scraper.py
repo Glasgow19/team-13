@@ -76,6 +76,10 @@ def get_slots(hours, appointments, duration=timedelta(hours=1)):
             print("{:%H:%M} - {:%H:%M}".format(start, start + duration))
             start += duration    
 
+
+def make_exercise_suggestion():
+    pass
+
 if __name__ == '__main__':
     main()
     get_slots(hours, appointments)
