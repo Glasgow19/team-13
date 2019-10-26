@@ -27,13 +27,19 @@
         <div class="container">
             <h1>Calendar</h1>
 
-            <h2>{{ test }}</h2>
+            <div class="row">
+                <div class="col-10">
+                    <table id="calendar">
+                        <tbody>
+                            {{slots}}
+                        </tbody>
+                    </table>
+                </div>
 
-            <table id="calendar">
-                <tbody>
-
-                </tbody>
-            </table>
+                <div class="col-2">
+                    Twitter stuff
+                </div>
+            </div>
         </div>
 
         <script src="{{ url_for('static', filename='js/calendar.js') }}"></script>

@@ -6,6 +6,7 @@ from datetime import timedelta
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+import numpy
 
 from flask import Flask, render_template, request, redirect
 
@@ -16,6 +17,7 @@ app = Flask(__name__)
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 appointments = []
+appointments_nice = []
 hours = (datetime.datetime(2019, 10, 28, 6), datetime.datetime(2019, 10, 28, 22)) # the hours of the day at which appointments can be made
 
 def main():
@@ -38,9 +40,11 @@ def main():
 
     service = build('calendar', 'v3', credentials=creds)
 
-    now = datetime.datetime.utcnow().isoformat() + 'Z'
-    
-    events_result = service.events().list(calendarId='primary', timeMin=now, maxResults=30, singleEvents=True, orderBy='startTime').execute()
+    #now = datetime.datetime.utcnow().isoformat() + 'Z'
+    now = datetime.datetime(2019, 10, 21, 00, 00).isoformat() + 'Z'
+    then = datetime.datetime(2019, 10, 27, 00, 00).isoformat() + 'Z'
+
+    events_result = service.events().list(calendarId='primary', timeMin=now, timeMax=then, singleEvents=True, orderBy='startTime').execute()
     events = events_result.get('items', [])
 
     if events:
@@ -71,28 +75,50 @@ def main():
             # adds appointment in list to datetime format
             appointments.append((datetime.datetime(int(year), int(month), int(day), int(start_hour), int(start_mins)), datetime.datetime(int(year), int(month), int(day), int(end_hour), int(end_mins))))
 
+            appointments_nice.append((day, start_hour, end_hour))
 
-# gets free slots in the user's calendar
+
+# returns free slots in the user's calendar
 def get_slots(hours, appointments, duration=timedelta(hours=1)):
+    free_slots = []
     slots = sorted([(hours[0], hours[0])] + appointments + [(hours[1], hours[1])])
 
     for start, end in ((slots[i][1], slots[i + 1][0]) for i in range(len(slots) - 1)):
         while (start + duration) <= end:
-            print("{:%H:%M} - {:%H:%M}".format(start, start + duration))
-            start += duration    
+            time_slot = "{:%H:%M}-{:%H:%M}".format(start, start + duration)
+            free_slots.append(time_slot)
+            start += duration
+    return free_slots
+
+
+# returns all 1 hour slots in a day whether they are free or not
+def get_all_slots():
+    return get_slots(hours, appointments) + appointments
 
 
 def make_exercise_suggestion():
     pass
 
+def create_calendar_matrix():
+    calendar = numpy.zeros((22, 7))
+
+    for appointment in appointments_nice:
+        day, start_hour, end_hour = appointment
+        
+        day = int(day) - 21
+        start_hour = int(start_hour)
+        end_hour = int(end_hour)
+
+        calendar[start_hour][day] = 1
+    return calendar
 
 @app.route('/')
 def calender():
-	return render_template('calendar.html', test=appointments)
+	return render_template('calendar.html', slots=create_calendar_matrix())
 
 
 if __name__ == "__main__":
     # start server
     main()
-    get_slots(hours, appointments)
-    app.run(port=8000, debug=False)
+    get_all_slots()
+    app.run(port=8000, debug=True)
