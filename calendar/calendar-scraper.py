@@ -1,4 +1,3 @@
-from __future__ import print_function
 import datetime
 import dateutil.parser
 import pickle
@@ -7,6 +6,12 @@ from datetime import timedelta
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+
+from flask import Flask, render_template, request, redirect
+
+# setup flask
+app = Flask(__name__)
+
 
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
@@ -80,6 +85,14 @@ def get_slots(hours, appointments, duration=timedelta(hours=1)):
 def make_exercise_suggestion():
     pass
 
-if __name__ == '__main__':
+
+@app.route('/')
+def calender():
+	return render_template('calendar.html', test=appointments)
+
+
+if __name__ == "__main__":
+    # start server
     main()
     get_slots(hours, appointments)
+    app.run(port=8000, debug=False)
