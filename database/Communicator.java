@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.StringReader;
+import java.io.File;
 import java.sql.*;
 import javax.json.*;
 
@@ -199,6 +200,8 @@ public class Communicator {
         }
         result = result.substring(0,result.length()-3);
         result = result + "] }";
+        File f = new File("output.txt");
+        f.delete();
         PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("output.txt", true)));
         writer.println(result);
         writer.close();
