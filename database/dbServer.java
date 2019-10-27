@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -25,7 +26,11 @@ public class dbServer {
                     break;
                 }
                 case "search": {
-                    System.out.println(communicator.search(connection,args[1]));
+                    try{
+                        communicator.search(connection,args[1]);
+                    }catch (IOException e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 }
                 case "addReason": {

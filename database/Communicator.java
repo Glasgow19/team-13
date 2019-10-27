@@ -1,4 +1,8 @@
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.sql.*;
 import javax.json.*;
@@ -181,7 +185,7 @@ public class Communicator {
         statement.close();
     }
 
-    public String search(Connection connection, String input) throws SQLException{
+    public String search(Connection connection, String input) throws SQLException, IOException{
         String[] in = input.split(",");
         if(in.length != 2)
             throw new IllegalArgumentException("Use format \"clientID,timeLimitInMinute\" (no space)");
@@ -195,6 +199,9 @@ public class Communicator {
         }
         result = result.substring(0,result.length()-3);
         result = result + "] }";
+        PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("output.txt", true)));
+        writer.println(result);
+        writer.close();
         return result;
     }
 
