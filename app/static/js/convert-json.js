@@ -32,9 +32,33 @@ function multipleToJSONForm(x){
 }
 
 function convertToJSON(){
-    var json = "{ " + convertToJSONForm("worktimefrom") + ", " + convertToJSONForm("worktimeto") + ", " + multipleToJSONForm("sports")
-                    + ", " + convertToJSONForm("injury") + ", " + convertToJSONForm("competition") + "}";
+    var allElements = document.getElementsByTagName("*");
+    var allIds = [];
+    var i;
+    for (i = 0, n = allElements.length; i < n; ++i) {
+        var el = allElements[i];
+        if (el.id) { allIds.push(el.id); }
+    }
     
+    var json = "{ ";
+    
+    var list;
+    for (list = 0; list < allIds.length; list++) {
+        if (allIds[list] == "sports") {
+            json += multipleToJSONForm("sports");
+            json += ", ";
+            // continue;
+        }
+
+        json += convertToJSONForm(allIds[list]);
+
+        if (list < allIds.length - 1) {
+            json += ", "
+        }
+    }
+
+    json += "}";
     console.log(json);
+
     return JSON.stringify(json);
 }
