@@ -147,13 +147,19 @@
             <br>
 
             <div class="row mb-5">
-                <div class="col-6 d-flex justify-content-center">
+                <div class="col-4 d-flex justify-content-center">
                     <div style="display: block; width: 400px; height: 400px; float: left;">
                         <canvas id="myTwitterChart" style="display: block; width: 400px; height: 400px;"></canvas>
                     </div>
                 </div>
 
-                <div class="col-6 d-flex justify-content-center">
+                <div class="col-4 d-flex justify-content-center">
+                    <div style="display: block; width: 400px; height: 400px; float: left;">
+                        <canvas id="screenTimeChart" style="display: block; width: 400px; height: 400px;"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-4 d-flex justify-content-center">
                     <div style="display: block; width: 400px; height: 400px; float: left;">
                         <canvas id="myGmailChart" style="display: block; width: 400px; height: 400px;"></canvas>
                     </div>
@@ -202,20 +208,11 @@
                         },
                         title: {
                             display: true,
-                            text: "Twitter interactions per day"
+                            text: "Twitter Interactions per Day"
                         },
-                        /* tooltips: {
-                            callbacks: {
-                                label: function (tooltipItem, data) {
-                                    name = tooltipItem.xLabel
-                                    tips = {{ tips|safe }}
-                                    label = tips[name]
-                                    return label;
-                                }
-                            }
-                        }  */
                     }
                 });
+
                 var ctx = document.getElementById('myGmailChart');
                 var myChart = new Chart(ctx, {
                     type: 'line',
@@ -244,18 +241,42 @@
                         },
                         title: {
                             display: true,
-                            text: "Gmail interactions per day"
+                            text: "Gmail Interactions per Day"
                         },
-                        /* tooltips: {
-                            callbacks: {
-                                label: function (tooltipItem, data) {
-                                    name = tooltipItem.xLabel
-                                    tips = {{ tips|safe }}
-                                    label = tips[name]
-                                    return label;
-                                }
-                            }
-                        }  */
+                    }
+                });
+
+                var ctx = document.getElementById('screenTimeChart');
+                var d = {
+                        datasets: [{
+                            label: '# of hours spent on screens',
+                            data: [10, 60, 30, 6, 20],
+                            backgroundColor: [
+                                "#878BB6", 
+                                "#4ACAB4", 
+                                "#FF8153", 
+                                "#FFEA88",
+                                "#a29bfe"
+                            ]  
+                        }],
+
+                        labels: [
+                            'Browsing',
+                            'Social Media',
+                            'Games',
+                            'Films',
+                            'Music'
+                        ]
+                    }
+
+                var myDoughnutChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: d,
+                    options: {
+                        title: {
+                            display: true,
+                            text: "Screen Time Usage per Day"
+                        },
                     }
                 });
     </script>
