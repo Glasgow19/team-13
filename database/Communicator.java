@@ -70,6 +70,9 @@ public class Communicator {
         addSuggestion(connection,"What about a 5 km run?",30,false,false,557,"Slow_Running");
         addSuggestion(connection,"What about swimming for 1 km?",40,false,true,590,"Swimming");
         addSuggestion(connection,"What about play a full football game?",90,true,false,800,"Football");
+        addSuggestion(connection,"Some football goaling practice?",60,false,false,700,"Football");
+        addSuggestion(connection,"200 m in butterfly?",20,false,true,800,"Swimming");
+        addSuggestion(connection,"500 m in frog?",25,false,true,800,"Swimming");
 
 
         PreparedStatement statement = connection.prepareStatement("INSERT INTO basicInfo (clientID ,name, location, gender, birthday, jobCat) " +
