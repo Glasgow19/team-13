@@ -2,16 +2,21 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/meetuser.css') }}">
 
-        <script src="{{ url_for('static', filename='js/convert-json.css') }}"></script>
-        <script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <!--<link rel="stylesheet" type="text/css" href=" url_for 'static', filename='/../../../app/static/css/meetuser.css">
+        <script src="url_for 'static', filename=/../../../app/static/js/convert-json.js"></script>-->
+
+        <!--<script>
             function populate(x) {
                 var select = document.getElementById(x);
                 var i;
                 for (i=0; i <= 23; i++){
                     var el = document.createElement("option");
-
                     if (i < 10) {
                         el.textContent = "0" + i + ":00";
                         el.value = "0" + i + ":00";
@@ -28,47 +33,82 @@
             populate('worktimefrom');
             populate('worktimeto');
         }
-        </script>
+        </script>-->
     </head>
+    
     <body>
-        <form onsubmit= "return convertToJSON(this);">
-            <div class="row"><h3><b>What are your average working hours (per day)?</b></h3>
-                <label for="from"><b>From:</b></label>
-                <select id = "worktimefrom">
-                </select>
-                <label for="to"><b>To:</b></label>
-                <select id = "worktimeto">
-                </select>
+        <!-- modal -->
+        <div class="container">
+        <div class="modal fade" id="questionnaireModal" tabindex="-1" role="dialog" aria-labelledby="questionnaireModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Questionnaire</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="male">Male </input>
+                        </label>
+            
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="femlae">Female </input>
+                        </label>
+            
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="other">Other </input>
+                        </label>
+                    </div>
+                    
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">City</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="London" aria-label="city" aria-describedby="basic-addon1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sel1">Preferred sports:</label>
+                        <select class="form-control" id="sel1">
+                            <option>I don't like sports</option>
+                            <option>Ball</option>
+                            <option>Aerobic</option>
+                            <option>Strength</option>
+                            <option>Balance</option>
+                            <option>Endurance</option>
+                            <option>Stretching</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sel1">Do you have any injuries / physical disabilities?</label>
+                        <select class="form-control" id="sel1">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="sel1">Are you competitive?</label>
+                        <select class="form-control" id="sel1">
+                            <option>Very</option>
+                            <option>Yes</option>
+                            <option>Not really</option>
+                            <option>Not at all</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Submit</button>
+                </div>
             </div>
-            <div class="row">
-                <label><b>Preferred Sport(s):</b>Pick all that applies</label>
-                <select id = "sports" multiple>
-                    <option>I don't like sports</option>
-                    <option>Ball</option>
-                    <option>Aerobic</option>
-                    <option>Strength</option>
-                    <option>Balance</option>
-                    <option>Endurance</option>
-                    <option>Stretching</option>
-                </select>
             </div>
-            <div class="row">
-                <label><b>Do you have any injuries / physical disabilities?</b></label>
-                <select id = "injury">
-                    <option value = "yes">Yes</option>
-                    <option value = "No">No</option>
-                </select>
-            </div>
-            <div class="row">
-                <label><b>Are you competitive?</b></label>
-                <select id = "competition">
-                    <option value = "4">Very</option>
-                    <option value = "3">Yes</option>
-                    <option value = "2">No</option>
-                    <option value = "1">Not at all</option>
-                </select>
-            </div>
-            <input type = "submit">
-        </form>
+        </div>
+        </div>
     </body>
 </html>

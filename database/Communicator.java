@@ -1,4 +1,8 @@
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.sql.*;
 import javax.json.*;
@@ -15,6 +19,7 @@ public class Communicator {
     public void createTables(Connection connection) throws SQLException {
 
         Statement statement = connection.createStatement();
+        statement.executeUpdate("DROP TABLE IF EXISTS reasons");
         statement.executeUpdate("DROP TABLE IF EXISTS suggestions");
         statement.executeUpdate("DROP TABLE IF EXISTS preference");
         statement.executeUpdate("DROP TABLE IF EXISTS sports");
@@ -43,6 +48,12 @@ public class Communicator {
                 "calPH SMALLINT(2000), " +
                 "sport INTEGER, " +
                 "FOREIGN KEY (sport) REFERENCES sports (sportNum) ON UPDATE CASCADE ON DELETE CASCADE)");
+        statement.executeUpdate("CREATE TABLE reasons (" +
+                "client VARCHAR(50), " +
+                "suggestion INTEGER, " +
+                "reason VARCHAR(50), " +
+                "FOREIGN KEY (client) REFERENCES basicInfo (clientID) ON UPDATE CASCADE ON DELETE CASCADE, " +
+                "FOREIGN KEY (suggestion) REFERENCES suggestions (suggNum) ON UPDATE CASCADE ON DELETE CASCADE)");
         statement.close();
 
         testValues(connection);
@@ -51,13 +62,18 @@ public class Communicator {
 
     private void testValues(Connection connection) throws SQLException{
 
-        PreparedStatement statement;
         addNewSport(connection,"Football");
         addNewSport(connection,"Slow_Running");
         addNewSport(connection,"Swimming");
 
-        statement = connection.prepareStatement("INSERT INTO basicInfo (clientID ,name, location, gender, birthday, jobCat) " +
-                                                            "VALUES (?, ?, ?, ?, ?, ?)");
+        addSuggestion(connection,"What about a 5 km run?",30,false,false,557,"Slow_Running");
+        addSuggestion(connection,"What about swimming for 1 km?",40,false,true,590,"Swimming");
+        addSuggestion(connection,"What about play a full football game?",90,true,false,800,"Football");
+
+
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO basicInfo (clientID ,name, location, gender, birthday, jobCat) " +
+                                                           "VALUES (?, ?, ?, ?, ?, ?)");
+
         statement.setString(1,"ABCDEFGH");
         statement.setString(2,"Tony");
         statement.setString(3,"Glasgow");
@@ -70,9 +86,7 @@ public class Communicator {
         addPreference(connection,"ABCDEFGH","Football");
         addPreference(connection,"ABCDEFGH","Swimming");
 
-        addSuggestion(connection,"What about a 5 km run?",30,false,false,557,"Slow_Running");
-        addSuggestion(connection,"What about swimming for 1 km?",40,false,true,590,"Swimming");
-        addSuggestion(connection,"What about play a full football game?",90,true,false,800,"Football");
+
 
         statement.close();
     }
@@ -171,7 +185,7 @@ public class Communicator {
         statement.close();
     }
 
-    public String search(Connection connection, String input) throws SQLException{
+    public String search(Connection connection, String input) throws SQLException, IOException{
         String[] in = input.split(",");
         if(in.length != 2)
             throw new IllegalArgumentException("Use format \"clientID,timeLimitInMinute\" (no space)");
@@ -185,8 +199,30 @@ public class Communicator {
         }
         result = result.substring(0,result.length()-3);
         result = result + "] }";
+        PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("output.txt", true)));
+        writer.println(result);
+        writer.close();
         return result;
     }
 
+    public void addReason(Connection connection, String input) throws SQLException{
+        String[] in = input.split(",");
+        if(in.length != 3)
+            throw new IllegalArgumentException("Use format \"clientID,suggestionContent,reason\" (no space)");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO reasons " +
+                "(client, suggestion, reason) VALUES (?, ?, ?)");
+        statement.setString(1,in[0]);
+        statement.setInt(2,suggNumGetter(connection,in[1]));
+        statement.setString(3,in[2]);
+        statement.executeUpdate();
+        statement.close();
+    }
+
+    private int suggNumGetter(Connection connection, String description) throws SQLException{
+        Statement statementQ = connection.createStatement();
+        ResultSet resultSet = statementQ.executeQuery("SELECT suggNum FROM suggestions " +
+                "WHERE description = \"" + description + "\"");
+        return resultSet.getInt("suggNum");
+    }
 
 }
