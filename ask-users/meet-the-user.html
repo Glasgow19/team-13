@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="meetuser.css" type="text/css" />
+        <script src="convert-json.js"></script>
+        <script>
+            function populate(x) {
+                var select = document.getElementById(x);
+                var i;
+                for (i=0; i <= 23; i++){
+                    var el = document.createElement("option");
+
+                    if (i < 10) {
+                        el.textContent = "0" + i + ":00";
+                        el.value = "0" + i + ":00";
+                    } else {
+                        el.textContent = i + ":00";
+                        el.value = i + ":00";
+                    }
+                    select.appendChild(el);
+                }
+            }
+        
+        //Calling the function on pageload
+        window.onload = function (x) {
+            populate('worktimefrom');
+            populate('worktimeto');
+        }
+        </script>
+    </head>
+    <body>
+        <form onsubmit= "return convertToJSON(this);">
+            <div class="row"><h3><b>What are your average working hours (per day)?</b></h3>
+                <label for="from"><b>From:</b></label>
+                <select id = "worktimefrom">
+                </select>
+                <label for="to"><b>To:</b></label>
+                <select id = "worktimeto">
+                </select>
+            </div>
+            <div class="row">
+                <label><b>Preferred Sport(s):</b>Pick all that applies</label>
+                <select id = "sports" multiple>
+                    <option>I don't like sports</option>
+                    <option>Ball</option>
+                    <option>Aerobic</option>
+                    <option>Strength</option>
+                    <option>Balance</option>
+                    <option>Endurance</option>
+                    <option>Stretching</option>
+                </select>
+            </div>
+            <div class="row">
+                <label><b>Do you have any injuries / physical disabilities?</b></label>
+                <select id = "injury">
+                    <option value = "yes">Yes</option>
+                    <option value = "No">No</option>
+                </select>
+            </div>
+            <div class="row">
+                <label><b>Are you competitive?</b></label>
+                <select id = "competition">
+                    <option value = "4">Very</option>
+                    <option value = "3">Yes</option>
+                    <option value = "2">No</option>
+                    <option value = "1">Not at all</option>
+                </select>
+            </div>
+            <input type = "submit">
+        </form>
+    </body>
+</html>
