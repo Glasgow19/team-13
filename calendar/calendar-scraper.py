@@ -13,12 +13,11 @@ from flask import Flask, render_template, request, redirect
 # setup flask
 app = Flask(__name__)
 
-
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
-appointments = []
-appointments_nice = []
-hours = (datetime.datetime(2019, 10, 28, 6), datetime.datetime(2019, 10, 28, 22)) # the hours of the day at which appointments can be made
+events = []
+events_nice = []
+hours = (datetime.datetime(2019, 10, 28, 6), datetime.datetime(2019, 10, 28, 22)) # the hours of the day at which events can be made
 
 def main():
     creds = None
@@ -45,10 +44,10 @@ def main():
     then = datetime.datetime(2019, 10, 27, 00, 00).isoformat() + 'Z'
 
     events_result = service.events().list(calendarId='primary', timeMin=now, timeMax=then, singleEvents=True, orderBy='startTime').execute()
-    events = events_result.get('items', [])
+    events_list = events_result.get('items', [])
 
-    if events:
-        for event in events:
+    if events_list:
+        for event in events_list:
             # this is horrible, needs re-written
             start = event['start'].get('dateTime', event['start'].get('date'))
             end = event['end'].get('dateTime', event['end'].get('date'))
@@ -72,16 +71,16 @@ def main():
             end_hour = end_time_split[0]
             end_mins = end_time_split[1]
 
-            # adds appointment in list to datetime format
-            appointments.append((datetime.datetime(int(year), int(month), int(day), int(start_hour), int(start_mins)), datetime.datetime(int(year), int(month), int(day), int(end_hour), int(end_mins))))
+            # adds event in list to datetime format
+            events.append((datetime.datetime(int(year), int(month), int(day), int(start_hour), int(start_mins)), datetime.datetime(int(year), int(month), int(day), int(end_hour), int(end_mins))))
 
-            appointments_nice.append((day, start_hour, end_hour, event['summary']))
+            events_nice.append((day, start_hour, end_hour, event['summary']))
 
 
 # returns free slots in the user's calendar
-def get_slots(hours, appointments, duration=timedelta(hours=1)):
+def get_slots(hours, events, duration=timedelta(hours=1)):
     free_slots = []
-    slots = sorted([(hours[0], hours[0])] + appointments + [(hours[1], hours[1])])
+    slots = sorted([(hours[0], hours[0])] + events + [(hours[1], hours[1])])
 
     for start, end in ((slots[i][1], slots[i + 1][0]) for i in range(len(slots) - 1)):
         while (start + duration) <= end:
@@ -98,23 +97,22 @@ def make_exercise_suggestion():
 # creates a matrix of calendar data to be sent to the webpage
 def create_calendar_matrix():
     calendar = np.zeros((17, 7), int)
-    appointment_list = []
+    event_list = []
 
-    for appointment in appointments_nice:
-        day, start_hour, end_hour, name = appointment
+    for event in events_nice:
+        day, start_hour, end_hour, name = event
         
         day = int(day) - 21
         start_hour = int(start_hour) - 6 # start at 6am
         end_hour = int(end_hour)
 
-        
         for i in range(end_hour - (start_hour + 6)):
-            appointment_list.append(name)
+            event_list.append(name)
             calendar[start_hour][day] = 1
             start_hour += 1
 
     calendar = np.asarray(calendar).flatten()
-    return list(calendar), appointment_list
+    return list(calendar), event_list
 
 
 @app.route('/')
@@ -126,5 +124,4 @@ def calender():
 if __name__ == "__main__":
     # start server
     main()
-    print(create_calendar_matrix())
-    app.run(port=8888, debug=True)
+    app.run(port=4000, debug=True)
