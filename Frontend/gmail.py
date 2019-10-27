@@ -42,12 +42,10 @@ def getLastSent():
 
     service = build('gmail', 'v1', credentials=creds)
 
-    print(service.users())
 
     # Call the Gmail API
     #results = service.users().labels().list(userId='me').execute()
     results = service.users().messages().list(userId='me', q='in:sent').execute()
-    print(results)
     for r in results['messages']:
         r2 = service.users().messages().get(userId='me',id=r['id']).execute()
         #print(datetime.fromtimestamp(int(r2['internalDate'])/1000))
@@ -60,9 +58,12 @@ def getLastSent():
         #print(datetime.fromtimestamp(int(r2['internalDate'])/1000))
             pastMonth[str(datetime.fromtimestamp(int(r2['internalDate'])/1000))[:10]].append(str(datetime.fromtimestamp(int(r2['internalDate'])/1000))[11:])
 
-    return pastMonth
+    retArr = []
+    for k,v in pastMonth.items():
+        retArr.append(len(v))
+    return retArr
 
-if __name__ == '__main__':
+""" if __name__ == '__main__':
     sent = getLastSent()
     for k,v in sent.items():
-        print(k + ' - ' +  ', '.join(v))
+        print(k + ' - ' +  ', '.join(v)) """

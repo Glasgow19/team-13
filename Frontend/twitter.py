@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
 import tweepy
 from datetime import datetime
 import tokens
 
 def getCalendar(username):
+
+    retArray = []
 
     auth = tweepy.OAuthHandler(tokens.con_key, tokens.con_sec)
     auth.set_access_token(tokens.sec_key, tokens.sec_sec)
@@ -47,10 +50,13 @@ def getCalendar(username):
                 pastMonth[str(tweet.created_at)[:10]].append(str(tweet.created_at)[11:])
         if allResults == False:
             tweets = api.user_timeline(screen_name=username,count=199,max_id=maxid,include_rts=True)
+    
+    for k,v in pastMonth.items():
+        retArray.append(len(v))
 
-    return pastMonth
+    return retArray
 
-demo = getCalendar('jalfrazi_')
+""" demo = getCalendar('jalfrazi_')
 
 for k,v in demo.items():
-    print(k + ' - ' + ', '.join(v))
+    print(k + ' - ' + ', '.join(v)) """

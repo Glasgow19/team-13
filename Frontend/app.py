@@ -7,12 +7,15 @@ Created on Sat Oct 26 16:19:40 2019
 """
 
 from flask import Flask
-from flask import Flask, flash, redirect, render_template, request, session, abort
+from flask import Flask, flash, redirect, render_template, request, session, abort,jsonify
 import os
+import twitter 
+import gmail
+import calUtils
 
 app = Flask(__name__)
 
-@app.route('/')
+""" @app.route('/')
 def home():
     if not session.get('logged_in'):
         return render_template('login.html')
@@ -25,7 +28,20 @@ def do_admin_login():
         session['logged_in'] = True
     else:
         flash('wrong password!')
-    return home()
+    return home() """
+
+@app.route('/stats',methods=['GET'])
+def stats():
+    twitterInfo = twitter.getCalendar('jalfrazi_')
+    gmailInfo = gmail.getLastSent()
+    #print(twitterInfo)
+    #print(gmailInfo)
+    labels = calUtils.getMonthLabels()
+    print(labels)
+    print(twitterInfo)
+    return render_template('stats.html',twitterInfo=twitterInfo[::-1],gmailInfo=gmailInfo[::-1])
+
+
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
