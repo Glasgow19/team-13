@@ -2,9 +2,9 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/meetuser.css') }}">
+        <link rel="stylesheet" type="text/css" href=" url_for 'static', filename='/../../../app/static/css/meetuser.css">
 
-        <script src="{{ url_for('static', filename='js/convert-json.css') }}"></script>
+        <script src="url_for 'static', filename=/../../../app/static/js/convert-json.js"></script>
         <script>
             function populate(x) {
                 var select = document.getElementById(x);
@@ -32,16 +32,21 @@
     </head>
     <body>
         <form onsubmit= "return convertToJSON(this);">
-            <div class="row"><h3><b>What are your average working hours (per day)?</b></h3>
-                <label for="from"><b>From:</b></label>
-                <select id = "worktimefrom">
-                </select>
-                <label for="to"><b>To:</b></label>
-                <select id = "worktimeto">
-                </select>
+            <b><p>Gender:</p></b>
+            <div>
+                <input type="radio" id="male" name="sex" value="male" checked />
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="sex" value="female" />
+                <label for="female">Female</label>
+                <input type="radio" id="other" name="sex" value="other" />
+                <label for="other">Other</label>
             </div>
+            <b><p>City:</p></b>
+            <form>
+                <input type="text" name="city"><br>
+            </form>
             <div class="row">
-                <label><b>Preferred Sport(s):</b>Pick all that applies</label>
+                <label><b><p>Preferred Sport(s):</b> Pick all that applies</p></label>
                 <select id = "sports" multiple>
                     <option>I don't like sports</option>
                     <option>Ball</option>
@@ -51,24 +56,24 @@
                     <option>Endurance</option>
                     <option>Stretching</option>
                 </select>
-            </div>
+            </div><br>
             <div class="row">
                 <label><b>Do you have any injuries / physical disabilities?</b></label>
                 <select id = "injury">
                     <option value = "yes">Yes</option>
                     <option value = "No">No</option>
                 </select>
-            </div>
+            </div><br>
             <div class="row">
                 <label><b>Are you competitive?</b></label>
                 <select id = "competition">
                     <option value = "4">Very</option>
                     <option value = "3">Yes</option>
-                    <option value = "2">No</option>
+                    <option value = "2">Not really</option>
                     <option value = "1">Not at all</option>
                 </select>
-            </div>
-            <input type = "submit">
+            </div><br>
+            <input type = "submit" value = "Let's go !">
         </form>
     </body>
 </html>
