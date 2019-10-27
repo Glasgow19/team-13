@@ -64,3 +64,8 @@ table {
 .card {
     width: 80% !important;
 }
+
+#questionnaireModal {
+    width: 100%;
+    text-align: left;
+}

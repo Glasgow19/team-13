@@ -22,11 +22,6 @@ def dashboard():
     return render_template('dashboard.html', slots=s, events=e, twitterInfo=twitterInfo[::-1], gmailInfo=gmailInfo[::-1])
 
 
-@app.route('/questionnaire')
-def questionnaire():
-    return render_template('questionnaire.html')
-
-
 @app.route('/')
 def index():
     if google_auth.is_logged_in():

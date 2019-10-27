@@ -26,6 +26,8 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        
+        {% include 'questionnaire.html' %}
 
         <div class="banner">      
             <ul>
@@ -41,7 +43,7 @@
                 <div class="col-8 d-flex justify-content-center">
         
                     <table id="calendar" class="table">
-                        <thead class="">
+                        <thead>
                             <tr>
                                 <th></th>
                                 <th><span class="lead text-muted small">MON</span><br><span class="lead">21</span></th>
@@ -282,5 +284,11 @@
                         },
                     }
                 });
+    </script>
+
+    <script type="text/javascript">
+        $(window).on('load',function(){
+            $('#questionnaireModal').modal('show');
+        });
     </script>
 </html>

@@ -9,9 +9,9 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
         <!--<link rel="stylesheet" type="text/css" href=" url_for 'static', filename='/../../../app/static/css/meetuser.css">
-
         <script src="url_for 'static', filename=/../../../app/static/js/convert-json.js"></script>-->
-        <script>
+
+        <!--<script>
             function populate(x) {
                 var select = document.getElementById(x);
                 var i;
@@ -33,57 +33,12 @@
             populate('worktimefrom');
             populate('worktimeto');
         }
-        </script>
+        </script>-->
     </head>
+    
     <body>
-        <!--<form onsubmit= "return convertToJSON(this);">
-            <b><p>Gender:</p></b>
-            <div>
-                <input type="radio" id="male" name="sex" value="male" checked />
-                <label for="male">Male</label>
-                <input type="radio" id="female" name="sex" value="female" />
-                <label for="female">Female</label>
-                <input type="radio" id="other" name="sex" value="other" />
-                <label for="other">Other</label>
-            </div>
-            <b><p>City:</p></b>
-            <form>
-                <input type="text" name="city"><br>
-            </form>
-            <div class="row">
-                <label><b><p>Preferred Sport(s):</b> Pick all that applies</p></label>
-                <select id = "sports" multiple>
-                    <option>I don't like sports</option>
-                    <option>Ball</option>
-                    <option>Aerobic</option>
-                    <option>Strength</option>
-                    <option>Balance</option>
-                    <option>Endurance</option>
-                    <option>Stretching</option>
-                </select>
-            </div><br>
-            <div class="row">
-                <label><b>Do you have any injuries / physical disabilities?</b></label>
-                <select id = "injury">
-                    <option value = "yes">Yes</option>
-                    <option value = "No">No</option>
-                </select>
-            </div><br>
-            <div class="row">
-                <label><b>Are you competitive?</b></label>
-                <select id = "competition">
-                    <option value = "4">Very</option>
-                    <option value = "3">Yes</option>
-                    <option value = "2">Not really</option>
-                    <option value = "1">Not at all</option>
-                </select>
-            </div><br>
-            <input type = "submit" value = "Let's go !">
-        </form>-->
-
-
-
-        <!-- Modal -->
+        <!-- modal -->
+        <div class="container">
         <div class="modal fade" id="questionnaireModal" tabindex="-1" role="dialog" aria-labelledby="questionnaireModalTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -97,15 +52,15 @@
                 <div class="modal-body">
                     <div class="form-check-inline">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="male"> Male
+                            <input type="radio" class="form-check-input" name="male">Male </input>
                         </label>
             
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="femlae"> Female
+                            <input type="radio" class="form-check-input" name="femlae">Female </input>
                         </label>
             
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="other"> Other
+                            <input type="radio" class="form-check-input" name="other">Other </input>
                         </label>
                     </div>
                     
@@ -154,11 +109,6 @@
             </div>
             </div>
         </div>
+        </div>
     </body>
-
-    <script type="text/javascript">
-        $(window).on('load',function(){
-            $('#questionnaireModal').modal('show');
-        });
-    </script>
 </html>
