@@ -21,3 +21,7 @@ def recommend():
 
     f.close()
     return recommendations
+
+
+if __name__ == "__main__":
+    recommend()
