@@ -8,12 +8,14 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import numpy as np
 
+import gmail, twitter, calUtils
+
 from flask import Flask, render_template, request, redirect
 
 # setup flask
 app = Flask(__name__)
 
-SCOPES = ['https://www.googleapis.com/auth/calendar']
+SCOPES = ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/gmail.readonly']
 
 events = []
 events_nice = []
@@ -115,10 +117,20 @@ def create_calendar_matrix():
     return list(calendar), event_list
 
 
-@app.route('/')
+@app.route('/calendar', methods=['GET'])
 def calender():
     s, e = create_calendar_matrix()
     return render_template('calendar.html', slots=s, events=e)
+
+
+@app.route('/stats', methods=['GET'])
+def stats():
+    twitterInfo = twitter.getCalendar('jalfrazi_')
+    gmailInfo = gmail.getLastSent()
+    labels = calUtils.getMonthLabels()
+    print(labels)
+    print(twitterInfo)
+    return render_template('stats.html',twitterInfo=twitterInfo[::-1],gmailInfo=gmailInfo[::-1])
 
 
 if __name__ == "__main__":
