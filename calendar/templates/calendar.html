@@ -56,7 +56,6 @@
 
                         var $table_body = $('tbody');
                         var start_time = 6;
-                        var counter = 0;
 
                         for (var i = 0; i < 17; i++) {
                             var row_html = '';
@@ -64,17 +63,17 @@
                             start_time++;
 
                             for (var j = 0; j < 7; j++) {
-                                row_html += '<td>' + slots[(i*7)+j] + '</td>';
+                                slot = slots[(i*7)+j]
+                                if (slot == 0) {
+                                    row_html += '<td>' + slot + '</td>';
+                                } else if (slot == 1) {
+                                    row_html += '<td class="event">' + slot + '</td>';
+                                }
                             }
                             
                             $table_body.append('<tr>' + row_html + '</tr>');
                             row_html = '';
-
-                            counter++;
                         }
-
-                    
-
                     </script> 
                         
                 </div>
