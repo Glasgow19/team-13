@@ -1,9 +1,10 @@
 *.pyc
 __pycache__
 .DS_Store
-calendar/credentials.json
-calendar/token.pickle
-calendar/tokens.py
-tokens.py
 venv
 run.sh
+
+app/credentials.json
+app/token.pickle
+app/tokens.py
+app/tokens.py
