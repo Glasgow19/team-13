@@ -28,6 +28,10 @@ public class dbServer {
                     System.out.println(communicator.search(connection,args[1]));
                     break;
                 }
+                case "addReason": {
+                    communicator.addReason(connection,args[1]);
+                    break;
+                }
             }
             if (connection != null)
                 connection.close();
