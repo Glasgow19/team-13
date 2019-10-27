@@ -48,5 +48,9 @@ def getCalendar(username):
         if allResults == False:
             tweets = api.user_timeline(screen_name=username,count=199,max_id=maxid,include_rts=True)
 
-""" for k,v in pastMonth.items():
-    print(k + ' - ' + ', '.join(v)) """
+    return pastMonth
+
+demo = getCalendar('jalfrazi_')
+
+for k,v in demo.items():
+    print(k + ' - ' + ', '.join(v))
