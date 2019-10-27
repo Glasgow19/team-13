@@ -194,12 +194,19 @@ public class Communicator {
         ResultSet resultSet = statementQ.executeQuery("SELECT description FROM suggestions, preference " +
                                 "WHERE suggestions.sport = preference.sport AND preference.client = \"" + in[0] +
                                         "\" AND suggestions.timeMin <= " + Integer.parseInt(in[1]));
+        /*
         String result = "{ \"suggestions\" : [\"";
         while(resultSet.next()){
             result = result + resultSet.getString("description") + "\", \"";
         }
         result = result.substring(0,result.length()-3);
         result = result + "] }";
+        */
+        String result = "";
+        while(resultSet.next()){
+            result = result + resultSet.getString("description") + ",";
+        }
+        result = result.substring(0,result.length()-1);
         File f = new File("output.txt");
         f.delete();
         PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("output.txt", true)));
