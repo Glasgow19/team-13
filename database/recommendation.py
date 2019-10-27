@@ -1,7 +1,7 @@
 import os
+import json
 
 # database written in java even though app written in Java
-
 def recommend():
     java_cmd = 'java -classpath sqlite-jdbc.jar:javax.json-1.0.jar:. dbServer '
 
@@ -9,16 +9,15 @@ def recommend():
     new_account = java_cmd + 'newAccount {"clientID": "goodbye"}'
     search = java_cmd + 'search ABCDEFGH,90'
 
-    #s.system(create)
-    #os.system(new_account)
-
+    os.system(create)
     os.system(search)
 
-    import json
+    recommendations = []
 
-    with open('output.txt') as f:
-        for line in f:
-            temp = json.loads(line)
-            print(temp['suggestions'][0])
+    with open('../database/output.txt') as f:
+        recos = f.readline().split(',')
+        for r in recos:
+            recommendations.append(r)
 
     f.close()
+    return recommendations

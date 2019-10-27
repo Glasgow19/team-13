@@ -1,7 +1,7 @@
 import os
 import flask
 import google_auth
-import cal, gmail, twitter, calUtils
+import sys
 from flask import render_template, redirect
 
 app = flask.Flask(__name__)
@@ -9,6 +9,8 @@ app.secret_key = os.environ.get("FN_FLASK_SECRET_KEY", default=False)
 
 app.register_blueprint(google_auth.app)
 
+sys.path.insert(1, '../database/')
+import cal, gmail, twitter, calUtils, recommendation
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
@@ -22,7 +24,9 @@ def dashboard():
     
     gmailInfo = gmail.getLastSent(access,userId)
 
-    return render_template('dashboard.html', slots=s, events=e, twitterInfo=twitterInfo[::-1], gmailInfo=gmailInfo[::-1],user_info = userInfo)
+    recommendations = recommendation.recommend()
+
+    return render_template('dashboard.html', slots=s, events=e, twitterInfo=twitterInfo[::-1], gmailInfo=gmailInfo[::-1], user_info=userInfo, recommendations=recommendations)
 
 
 @app.route('/')

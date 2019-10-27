@@ -104,35 +104,13 @@
                     <br>
                     <span class="subtitle">Find new ways to excercise!</span>
                     
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            Recommendation 1
+                    {% for r in recommendations %}
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                {{r}}
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            Recommendation 2
-                        </div>
-                    </div>
-
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            Recommendation 3
-                        </div>
-                    </div>
-
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            Recommendation 4
-                        </div>
-                    </div>
-
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            Recommendation 5
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
 
