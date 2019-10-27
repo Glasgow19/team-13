@@ -75,7 +75,7 @@ def main():
             # adds appointment in list to datetime format
             appointments.append((datetime.datetime(int(year), int(month), int(day), int(start_hour), int(start_mins)), datetime.datetime(int(year), int(month), int(day), int(end_hour), int(end_mins))))
 
-            appointments_nice.append((day, start_hour, end_hour))
+            appointments_nice.append((day, start_hour, end_hour, event['summary']))
 
 
 # returns free slots in the user's calendar
@@ -91,39 +91,40 @@ def get_slots(hours, appointments, duration=timedelta(hours=1)):
     return free_slots
 
 
-# returns all 1 hour slots in a day whether they are free or not
-def get_all_slots():
-    return get_slots(hours, appointments) + appointments
-
-
+# algorithm to find excerices based on your time slot
 def make_exercise_suggestion():
     pass
 
+# creates a matrix of calendar data to be sent to the webpage
 def create_calendar_matrix():
     calendar = np.zeros((17, 7), int)
+    appointment_list = []
 
     for appointment in appointments_nice:
-        day, start_hour, end_hour = appointment
+        day, start_hour, end_hour, name = appointment
         
         day = int(day) - 21
         start_hour = int(start_hour) - 6 # start at 6am
         end_hour = int(end_hour)
+
         
         for i in range(end_hour - (start_hour + 6)):
+            appointment_list.append(name)
             calendar[start_hour][day] = 1
             start_hour += 1
 
     calendar = np.asarray(calendar).flatten()
-    return list(calendar)
+    return list(calendar), appointment_list
+
 
 @app.route('/')
 def calender():
-	return render_template('calendar.html', slots=create_calendar_matrix())
+    s, e = create_calendar_matrix()
+    return render_template('calendar.html', slots=s, events=e)
 
 
 if __name__ == "__main__":
     # start server
     main()
-    get_all_slots()
     print(create_calendar_matrix())
-    app.run(port=8008, debug=True)
+    app.run(port=8888, debug=True)

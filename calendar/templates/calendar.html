@@ -29,6 +29,7 @@
 
             <div class="row">
                 <div class="col-10">
+                    <h3>21st October 19 - 27th October 19</h3>
 
                     <table id="calendar">
                             <thead>
@@ -50,12 +51,18 @@
                         </table>
 
                     <script>
-                        var slots = "{{slots}}";
-                        slots = slots.replace("[", "").replace("]", "").split(", ");
+                        var slots = '{{slots}}';
+                        slots = slots.replace('[', '').replace(']', '').split(', ');
 
+                        var events = '{{events}}';
+                        events = events.replace('[', '').replace(']', '').split(', ');
+
+                        events = events
 
                         var $table_body = $('tbody');
                         var start_time = 6;
+                        
+                        var counter = 0;
 
                         for (var i = 0; i < 17; i++) {
                             var row_html = '';
@@ -65,9 +72,11 @@
                             for (var j = 0; j < 7; j++) {
                                 slot = slots[(i*7)+j]
                                 if (slot == 0) {
-                                    row_html += '<td>' + slot + '</td>';
+                                    row_html += '<td class="free"></td>';
                                 } else if (slot == 1) {
-                                    row_html += '<td class="event">' + slot + '</td>';
+                                    print(events[slot])
+                                    row_html += '<td class="event">' + events[counter] + '</td>';
+                                    counter++;
                                 }
                             }
                             
@@ -83,7 +92,5 @@
                 </div>
             </div>
         </div>
-
-        <!--<script src="{{ url_for('static', filename='js/calendar.js') }}"></script>-->
     </body>
 </html>
