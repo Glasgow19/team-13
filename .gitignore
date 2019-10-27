@@ -3,7 +3,6 @@ __pycache__
 .DS_Store
 venv
 run.sh
-
 app/credentials.json
 app/token.pickle
 app/tokens.py

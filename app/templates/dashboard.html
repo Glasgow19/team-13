@@ -84,7 +84,7 @@
                                 if (slot == 0) {
                                     row_html += '<td class="free table-light"></td>';
                                 } else if (slot == 1) {
-                                    row_html += '<td class="event table-primary">' + events[counter] + '</td>';
+                                    row_html += '<td class="event">' + events[counter] + '</td>';
                                     counter++;
                                 }
                             }
@@ -96,8 +96,40 @@
                         
                 </div>
 
-                <div class="col-4">
-                    <p>Exercise Recommendations</p>
+                <div class="col-4 text-center mt-5">
+                    <span class="title">Recommendations</span>
+                    <br>
+                    <span class="subtitle">Find new ways to excercise!</span>
+                    
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            Recommendation 1
+                        </div>
+                    </div>
+
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            Recommendation 2
+                        </div>
+                    </div>
+
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            Recommendation 3
+                        </div>
+                    </div>
+
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            Recommendation 4
+                        </div>
+                    </div>
+
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            Recommendation 5
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -114,7 +146,7 @@
 
             <br>
 
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col-6 d-flex justify-content-center">
                     <div style="display: block; width: 400px; height: 400px; float: left;">
                         <canvas id="myTwitterChart" style="display: block; width: 400px; height: 400px;"></canvas>
