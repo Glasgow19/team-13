@@ -16,7 +16,9 @@ def dashboard():
     s, e = cal.create_calendar_matrix()
 
     twitterInfo = twitter.getCalendar('jalfrazi_')
-    gmailInfo = gmail.getLastSent()
+    userId = google_auth.get_user_info()['id']
+    access = flask.session['auth_token']['access_token']
+    gmailInfo = gmail.getLastSent(access,userId)
     labels = calUtils.getMonthLabels()
 
     return render_template('dashboard.html', slots=s, events=e, twitterInfo=twitterInfo[::-1], gmailInfo=gmailInfo[::-1])
@@ -30,7 +32,9 @@ def questionnaire():
 @app.route('/')
 def index():
     if google_auth.is_logged_in():
-        return render_template('list.html', user_info=google_auth.get_user_info())
+        print(flask.session)
+        userInfo = google_auth.get_user_info()
+        return render_template('list.html',user_info=userInfo)
     else:
         return redirect('/google/login')
 
