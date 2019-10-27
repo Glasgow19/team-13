@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Lucky 13</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js'></script>
+            
+    </head>
+
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div class="banner">      
+            <ul>
+                <li>
+                    DASHBOARD
+                    <p style="font-size:12px">Welcome back</p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="container-flex">
+            <div class="row">
+                <div class="col-8 d-flex justify-content-center">
+        
+                    <table id="calendar" class="table">
+                        <thead class="">
+                            <tr>
+                                <th></th>
+                                <th><span class="lead text-muted small">MON</span><br><span class="lead">21</span></th>
+                                <th><span class="lead text-muted small">TUE</span><br><span class="lead">22</span></th>
+                                <th><span class="lead text-muted small">WED</span><br><span class="lead">23</span></th>
+                                <th><span class="lead text-muted small">THU</span><br><span class="lead">24</span></th>
+                                <th><span class="lead text-muted small">FRI</span><br><span class="lead">25</span></th>
+                                <th><span class="lead text-muted small">SAT</span><br><span class="lead">26</span></th>
+                                <th><span class="lead text-muted small">SUN</span><br><span class="lead">27</span></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>  
+
+                        </tbody>
+                    </table>
+
+                    <script>
+                        var slots = '{{slots}}';
+                        slots = slots.replace('[', '').replace(']', '').split(', ');
+
+                        var find = '&#39;'; // removes quotation marks from event name
+                        var reg = new RegExp(find, 'g');
+
+                        var events = '{{events}}';
+                        events = events.replace('[', '').replace(']', '').replace(reg, '').split(', ');
+
+                        var $table_body = $('tbody');
+                        var start_time = 6;
+                        
+                        var counter = 0;
+
+                        for (var i = 0; i < 17; i++) {
+                            var row_html = '';
+                            row_html += '<td class="lead">' + start_time + '</td>'
+                            start_time++;
+
+                            for (var j = 0; j < 7; j++) {
+                                slot = slots[(i*7)+j]
+                                if (slot == 0) {
+                                    row_html += '<td class="free table-light"></td>';
+                                } else if (slot == 1) {
+                                    row_html += '<td class="event table-primary">' + events[counter] + '</td>';
+                                    counter++;
+                                }
+                            }
+                            
+                            $table_body.append('<tr>' + row_html + '</tr>');
+                            row_html = '';
+                        }
+                    </script> 
+                        
+                </div>
+
+                <div class="col-4">
+                    <p>Exercise Recommendations</p>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="banner-2">      
+                <ul>
+                    <li>
+                        TECHNOLOGY STATISTICS
+                        <p style="font-size:12px">Time spent not exercising..</p>
+                    </li>
+                </ul>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-6 d-flex justify-content-center">
+                    <div style="display: block; width: 400px; height: 400px; float: left;">
+                        <canvas id="myTwitterChart" style="display: block; width: 400px; height: 400px;"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-6 d-flex justify-content-center">
+                    <div style="display: block; width: 400px; height: 400px; float: left;">
+                        <canvas id="myGmailChart" style="display: block; width: 400px; height: 400px;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        let retArr = []
+            var max = new Date();
+            for (x = max.getDate(); x > 0; x--){
+                var today = new Date();
+                var dd = String(today.getDate() -x).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                var yyyy = today.getFullYear();
+
+                todayString = yyyy+ '-'+mm+'-'+dd
+                retArr.push(todayString)
+            }
+                var ctx = document.getElementById('myTwitterChart');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: retArr,
+                        datasets: [{
+                            label: '# of interactions',
+                            data: {{twitterInfo}},
+                        
+                            backgroundColor: '#38A1F3'
+                        ,
+                            borderColor: 
+                            '#0084B4'
+                            ,
+                            borderWidth: 1,
+                            pointRadius: 1.5
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                },
+                            }]
+                        },
+                        title: {
+                            display: true,
+                            text: "Twitter interactions per day"
+                        },
+                        /* tooltips: {
+                            callbacks: {
+                                label: function (tooltipItem, data) {
+                                    name = tooltipItem.xLabel
+                                    tips = {{ tips|safe }}
+                                    label = tips[name]
+                                    return label;
+                                }
+                            }
+                        }  */
+                    }
+                });
+                var ctx = document.getElementById('myGmailChart');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: retArr,
+                        datasets: [{
+                            label: '# of emails opened/sent',
+                            data: {{gmailInfo}},
+                        
+                            backgroundColor: '#D44638'
+                        ,
+                            borderColor: 
+                            '#B23121'
+                            ,
+                            borderWidth: 1,
+                            pointRadius: 1.5
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                },
+                            }]
+                        },
+                        title: {
+                            display: true,
+                            text: "Gmail interactions per day"
+                        },
+                        /* tooltips: {
+                            callbacks: {
+                                label: function (tooltipItem, data) {
+                                    name = tooltipItem.xLabel
+                                    tips = {{ tips|safe }}
+                                    label = tips[name]
+                                    return label;
+                                }
+                            }
+                        }  */
+                    }
+                });
+    </script>
+</html>

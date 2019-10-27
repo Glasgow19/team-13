@@ -1,5 +1,6 @@
-__pycache__
-Frontend/tokens.py
-Frontend/credentials.json 
-.DS_Store
 *.pyc
+__pycache__
+calendar/credentials.json
+calendar/token.pickle
+tokens.py
+.DS_Store
