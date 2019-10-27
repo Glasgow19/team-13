@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Lucky 13</title>
+        <meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js'></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
+        <style>
+            *{
+                font-family: Arial, Helvetica, sans-serif;
+            }
+        </style>
+        <div style="display: block; width: 400px; height: 400px; float: left;">
+                <canvas id="myTwitterChart" style="display: block; width: 400px; height: 400px;"></canvas>
+            </div>
+        <div style="display: block; width: 400px; height: 400px; float: left;">
+                <canvas id="myGmailChart" style="display: block; width: 400px; height: 400px;"></canvas>
+            </div>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+	</body>
+	<script>
+        let retArr = []
+        var max = new Date();
+        for (x = max.getDate(); x > 0; x--){
+            var today = new Date();
+            var dd = String(today.getDate() -x).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+
+            todayString = yyyy+ '-'+mm+'-'+dd
+            retArr.push(todayString)
+        }
+			var ctx = document.getElementById('myTwitterChart');
+			var myChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: retArr,
+					datasets: [{
+						label: '# of interactions',
+						data: {{twitterInfo}},
+					
+						backgroundColor: '#38A1F3'
+					,
+						borderColor: 
+                        '#0084B4'
+						,
+                        borderWidth: 1,
+                        pointRadius: 1.5
+					}]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true
+							},
+						}]
+					},
+					title: {
+						display: true,
+						text: "Twitter interactions per day"
+					},
+					/* tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								name = tooltipItem.xLabel
+								tips = {{ tips|safe }}
+								label = tips[name]
+								return label;
+							}
+						}
+					}  */
+				}
+            });
+            var ctx = document.getElementById('myGmailChart');
+			var myChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: retArr,
+					datasets: [{
+						label: '# of emails opened/sent',
+						data: {{gmailInfo}},
+					
+						backgroundColor: '#D44638'
+					,
+						borderColor: 
+                        '#B23121'
+						,
+                        borderWidth: 1,
+                        pointRadius: 1.5
+					}]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true
+							},
+						}]
+					},
+					title: {
+						display: true,
+						text: "Gmail interactions per day"
+					},
+					/* tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								name = tooltipItem.xLabel
+								tips = {{ tips|safe }}
+								label = tips[name]
+								return label;
+							}
+						}
+					}  */
+				}
+			});
+		</script>
+</html>
