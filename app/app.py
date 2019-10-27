@@ -12,22 +12,28 @@ app.register_blueprint(google_auth.app)
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
-    cal.main()
+    access = flask.session['auth_token']['access_token']
+    cal.main(access)
     s, e = cal.create_calendar_matrix()
 
     twitterInfo = twitter.getCalendar('jalfrazi_')
-    gmailInfo = gmail.getLastSent()
-    labels = calUtils.getMonthLabels()
+    userId = google_auth.get_user_info()['id']
     
-    return render_template('dashboard.html', slots=s, events=e, twitterInfo=twitterInfo[::-1], gmailInfo=gmailInfo[::-1], user_info=google_auth.get_user_info())
+    gmailInfo = gmail.getLastSent(access,userId)
+
+    return render_template('dashboard.html', slots=s, events=e, twitterInfo=twitterInfo[::-1], gmailInfo=gmailInfo[::-1])
+
+
+@app.route('/questionnaire')
+def questionnaire():
+    return render_template('questionnaire.html')
 
 
 @app.route('/')
 def index():
     if google_auth.is_logged_in():
-        return redirect('/dashboard')
-
-        #return render_template('dashboard.html', user_info=google_auth.get_user_info())
+        userInfo = google_auth.get_user_info()
+        return render_template('list.html',user_info=userInfo)
     else:
         return redirect('/google/login')
 
