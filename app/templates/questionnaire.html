@@ -2,8 +2,9 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="meetuser.css" type="text/css" />
-        <script src="convert-json.js"></script>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/meetuser.css') }}">
+
+        <script src="{{ url_for('static', filename='js/convert-json.css') }}"></script>
         <script>
             function populate(x) {
                 var select = document.getElementById(x);

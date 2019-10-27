@@ -2,11 +2,6 @@
   box-sizing: border;
 }
 
-body {
-    background-color: deepskyblue;
-}
-
-
 input[type=text], select, textarea {
   width: 30%;
   padding: 12px;
