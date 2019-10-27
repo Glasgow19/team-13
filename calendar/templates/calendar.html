@@ -29,9 +29,26 @@
 
             <div class="row">
                 <div class="col-10">
+                    <p id="demo"></p>
+
+                    <script>
+                        var slots = "{{slots}}";
+
+                        //console.log(slots.split(' '));
+    
+                        slots.forEach(element => {
+                            //$('tbody').append("<h1>" + element + "</h1>");
+                            console.log(element);
+                        });
+                    </script> 
+                        
+
                     <table id="calendar">
-                        <tbody>
-                            {{slots}}
+                        <tbody>  
+                            <script type="js/javascript">
+                                alert('a')
+                                
+                            </script>
                         </tbody>
                     </table>
                 </div>

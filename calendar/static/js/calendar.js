@@ -18,6 +18,4 @@ $(document).ready(() => {
             row_html = '';
         }
     }
-
-    
 });

@@ -6,7 +6,7 @@ from datetime import timedelta
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
-import numpy
+import numpy as np
 
 from flask import Flask, render_template, request, redirect
 
@@ -100,7 +100,7 @@ def make_exercise_suggestion():
     pass
 
 def create_calendar_matrix():
-    calendar = numpy.zeros((22, 7))
+    calendar = np.zeros((22, 7), int)
 
     for appointment in appointments_nice:
         day, start_hour, end_hour = appointment
@@ -110,7 +110,9 @@ def create_calendar_matrix():
         end_hour = int(end_hour)
 
         calendar[start_hour][day] = 1
-    return calendar
+    
+    calendar = np.asarray(calendar.T).flatten()
+    return list(calendar)
 
 @app.route('/')
 def calender():
@@ -121,4 +123,5 @@ if __name__ == "__main__":
     # start server
     main()
     get_all_slots()
+    print(create_calendar_matrix())
     app.run(port=8000, debug=True)
