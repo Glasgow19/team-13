@@ -6,11 +6,6 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from datetime import datetime
 
-# If modifying these scopes, delete the file token.pickle.
-#SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
-
-
-
 def getLastSent():
     pastMonth = {}
 

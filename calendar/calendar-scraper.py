@@ -117,20 +117,15 @@ def create_calendar_matrix():
     return list(calendar), event_list
 
 
-@app.route('/calendar', methods=['GET'])
-def calender():
+@app.route('/dashboard', methods=['GET'])
+def dashboard():
     s, e = create_calendar_matrix()
-    return render_template('calendar.html', slots=s, events=e)
 
-
-@app.route('/stats', methods=['GET'])
-def stats():
     twitterInfo = twitter.getCalendar('jalfrazi_')
     gmailInfo = gmail.getLastSent()
     labels = calUtils.getMonthLabels()
-    print(labels)
-    print(twitterInfo)
-    return render_template('stats.html',twitterInfo=twitterInfo[::-1],gmailInfo=gmailInfo[::-1])
+
+    return render_template('dashboard.html', slots=s, events=e, twitterInfo=twitterInfo[::-1], gmailInfo=gmailInfo[::-1])
 
 
 if __name__ == "__main__":
