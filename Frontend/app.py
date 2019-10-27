@@ -1,32 +1,27 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Oct 26 16:19:40 2019
-
-@author: sarah
-"""
-
-from flask import Flask
-from flask import Flask, flash, redirect, render_template, request, session, abort
 import os
+import flask
+import google_auth
 
-app = Flask(__name__)
+
+os.environ.setdefault("FN_AUTH_REDIRECT_URI","http://localhost:8040/google/auth")
+os.environ.setdefault("FN_BASE_URI","http://localhost:8040")
+os.environ.setdefault("FN_CLIENT_ID","183079298451-mhjb15qu6mpmvecprsvl8knlk7ov20hc.apps.googleusercontent.com")
+os.environ.setdefault("FN_CLIENT_SECRET","CE_9ec7KN9kwqnV0JXx0Lx9h")
+
+os.environ.setdefault("FLASK_APP","app.py")
+os.environ.setdefault("FLASK_DEBUG",1)
+os.environ.setdefault("FN_FLASK_SECRET_KEY","1234567")
+
+app = flask.Flask(__name__)
+app.secret_key = os.environ.get("FN_FLASK_SECRET_KEY", default=False)
+
+app.register_blueprint(google_auth.app)
+
 
 @app.route('/')
-def home():
-    if not session.get('logged_in'):
-        return render_template('login.html')
-    else:
-        return "Hello Boss!"
+def index():
+    if google_auth.is_logged_in():
 
-@app.route('/login', methods=['POST'])
-def do_admin_login():
-    if request.form['password'] == 'password' and request.form['username'] == 'admin':
-        session['logged_in'] = True
-    else:
-        flash('wrong password!')
-    return home()
+        return flask.render_template('list.html', user_info=google_auth.get_user_info())
 
-if __name__ == "__main__":
-    app.secret_key = os.urandom(12)
-    app.run(debug=True,host='0.0.0.0', port=4000)
+    return 'You are not currently logged in.'
