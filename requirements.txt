@@ -7,3 +7,4 @@ google_auth_oauthlib
 python-dateutil
 numpy
 tweepy
+requests

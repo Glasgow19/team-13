@@ -12,14 +12,14 @@ app.register_blueprint(google_auth.app)
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
-    cal.main()
+    access = flask.session['auth_token']['access_token']
+    cal.main(access)
     s, e = cal.create_calendar_matrix()
 
     twitterInfo = twitter.getCalendar('jalfrazi_')
     userId = google_auth.get_user_info()['id']
-    access = flask.session['auth_token']['access_token']
+    
     gmailInfo = gmail.getLastSent(access,userId)
-    labels = calUtils.getMonthLabels()
 
     return render_template('dashboard.html', slots=s, events=e, twitterInfo=twitterInfo[::-1], gmailInfo=gmailInfo[::-1])
 

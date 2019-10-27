@@ -10,7 +10,7 @@ import googleapiclient.discovery
 ACCESS_TOKEN_URI = 'https://www.googleapis.com/oauth2/v4/token'
 AUTHORIZATION_URL = 'https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent'
 
-AUTHORIZATION_SCOPE ='openid email profile https://www.googleapis.com/auth/gmail.readonly'
+AUTHORIZATION_SCOPE ='openid email profile https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar'
 
 AUTH_REDIRECT_URI = os.environ.get("FN_AUTH_REDIRECT_URI", default=False)
 BASE_URI = os.environ.get("FN_BASE_URI", default=False)
