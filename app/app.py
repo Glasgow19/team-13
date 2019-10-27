@@ -32,9 +32,9 @@ def questionnaire():
 @app.route('/')
 def index():
     if google_auth.is_logged_in():
-        print(flask.session)
         userInfo = google_auth.get_user_info()
-        return render_template('list.html',user_info=userInfo)
+        return render_template('dashboard.html', user_info=userInfo)
+        #return redirect('/dashboard')
     else:
         return redirect('/google/login')
 

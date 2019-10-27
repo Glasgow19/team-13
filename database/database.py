@@ -1,3 +1,5 @@
+# testing database file
+
 import os
 
 java_cmd = 'java -classpath sqlite-jdbc.jar:javax.json-1.0.jar:. dbServer '
