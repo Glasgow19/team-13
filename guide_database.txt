@@ -1,0 +1,33 @@
+-To compile from command line-
+
+javac -classpath sqlite-jdbc.jar:javax.json-1.0.jar *.java
+
+
+-To run from command line-
+
+java -classpath sqlite-jdbc.jar:javax.json-1.0.jar:. dbServer <arg1> <arg2>
+
+
+-Functions:
+
+1. Initialise (Currently gives a few initial values to the databases)
+		(In practical case, it should only be run once to create the tables)
+Use:
+<arg1> = create
+<arg2> = [any String]
+
+2. Add New Account
+Use:
+<arg1> = newAccount
+<arg2> = [A string in JSON format, currently able to store (clientID, name, location, gender, birthday, job and sport preference) with the client ID is the only must have]
+
+3. Search for suggestions
+Use:
+<arg1> = search
+<arg2> = [clientID,time_limit_in_minute]
+
+4. Record reject cases
+Use:
+<arg1> = addReason
+<arg2> = [clientID,content_of_the_suggestion,reason]
+
