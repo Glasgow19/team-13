@@ -100,18 +100,20 @@ def make_exercise_suggestion():
     pass
 
 def create_calendar_matrix():
-    calendar = np.zeros((22, 7), int)
+    calendar = np.zeros((17, 7), int)
 
     for appointment in appointments_nice:
         day, start_hour, end_hour = appointment
         
         day = int(day) - 21
-        start_hour = int(start_hour)
+        start_hour = int(start_hour) - 6 # start at 6am
         end_hour = int(end_hour)
+        
+        for i in range(end_hour - (start_hour + 6)):
+            calendar[start_hour][day] = 1
+            start_hour += 1
 
-        calendar[start_hour][day] = 1
-    
-    calendar = np.asarray(calendar.T).flatten()
+    calendar = np.asarray(calendar).flatten()
     return list(calendar)
 
 @app.route('/')
@@ -124,4 +126,4 @@ if __name__ == "__main__":
     main()
     get_all_slots()
     print(create_calendar_matrix())
-    app.run(port=8000, debug=True)
+    app.run(port=8008, debug=True)

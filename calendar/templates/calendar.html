@@ -29,28 +29,54 @@
 
             <div class="row">
                 <div class="col-10">
-                    <p id="demo"></p>
+
+                    <table id="calendar">
+                            <thead>
+                                <tr>
+                                    <th> </th>
+                                    <th>Monday</th>
+                                    <th>Tuesday</th>
+                                    <th>Wednesday</th>
+                                    <th>Thursday</th>
+                                    <th>Friday</th>
+                                    <th>Saturday</th>
+                                    <th>Sunday</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>  
+
+                            </tbody>
+                        </table>
 
                     <script>
                         var slots = "{{slots}}";
+                        slots = slots.replace("[", "").replace("]", "").split(", ");
 
-                        //console.log(slots.split(' '));
-    
-                        slots.forEach(element => {
-                            //$('tbody').append("<h1>" + element + "</h1>");
-                            console.log(element);
-                        });
+
+                        var $table_body = $('tbody');
+                        var start_time = 6;
+                        var counter = 0;
+
+                        for (var i = 0; i < 17; i++) {
+                            var row_html = '';
+                            row_html += '<td>' + start_time + '</td>'
+                            start_time++;
+
+                            for (var j = 0; j < 7; j++) {
+                                row_html += '<td>' + slots[(i*7)+j] + '</td>';
+                            }
+                            
+                            $table_body.append('<tr>' + row_html + '</tr>');
+                            row_html = '';
+
+                            counter++;
+                        }
+
+                    
+
                     </script> 
                         
-
-                    <table id="calendar">
-                        <tbody>  
-                            <script type="js/javascript">
-                                alert('a')
-                                
-                            </script>
-                        </tbody>
-                    </table>
                 </div>
 
                 <div class="col-2">
@@ -59,6 +85,6 @@
             </div>
         </div>
 
-        <script src="{{ url_for('static', filename='js/calendar.js') }}"></script>
+        <!--<script src="{{ url_for('static', filename='js/calendar.js') }}"></script>-->
     </body>
 </html>
