@@ -17,24 +17,18 @@ def dashboard():
     s, e = cal.create_calendar_matrix()
 
     twitterInfo = twitter.getCalendar('jalfrazi_')
-    userId = google_auth.get_user_info()['id']
+    userInfo = google_auth.get_user_info()
+    userId = userInfo['id']
     
     gmailInfo = gmail.getLastSent(access,userId)
 
-    return render_template('dashboard.html', slots=s, events=e, twitterInfo=twitterInfo[::-1], gmailInfo=gmailInfo[::-1])
-
-
-@app.route('/questionnaire')
-def questionnaire():
-    return render_template('questionnaire.html')
+    return render_template('dashboard.html', slots=s, events=e, twitterInfo=twitterInfo[::-1], gmailInfo=gmailInfo[::-1],user_info = userInfo)
 
 
 @app.route('/')
 def index():
     if google_auth.is_logged_in():
-        userInfo = google_auth.get_user_info()
-        return render_template('dashboard.html', user_info=userInfo)
-        #return redirect('/dashboard')
+        return redirect('/dashboard')
     else:
         return redirect('/google/login')
 

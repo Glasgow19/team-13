@@ -7,7 +7,7 @@ def recommend():
 
     create = java_cmd + 'create hello'
     new_account = java_cmd + 'newAccount {"clientID": "goodbye"}'
-    search = java_cmd + 'search ABCDEFGH,80'
+    search = java_cmd + 'search ABCDEFGH,90'
 
     #s.system(create)
     #os.system(new_account)
