@@ -23,32 +23,42 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+
+        <div class="background">      
+            <ul>
+                <li>
+                    DASHBOARD
+                    <p style="font-size:12px">Welcome back!</p>
+                </li>
+            </ul>
+        </div>
+
         
-        <div class="container">
-            <h1>Calendar</h1>
+        <div class="container-flex">
+            <h3>21st October 19 - 27th October 19</h3>
 
             <div class="row">
-                <div class="col-10">
-                    <h3>21st October 19 - 27th October 19</h3>
+                <div class="col-8">
+                    
 
-                    <table id="calendar">
-                            <thead>
-                                <tr>
-                                    <th> </th>
-                                    <th>Monday</th>
-                                    <th>Tuesday</th>
-                                    <th>Wednesday</th>
-                                    <th>Thursday</th>
-                                    <th>Friday</th>
-                                    <th>Saturday</th>
-                                    <th>Sunday</th>
-                                </tr>
-                            </thead>
+                    <table id="calendar" class="table">
+                        <thead class="">
+                            <tr>
+                                <th> </th>
+                                <th>MON</th>
+                                <th>TUE</th>
+                                <th>WED</th>
+                                <th>THU</th>
+                                <th>FRI</th>
+                                <th>SAT</th>
+                                <th>SUN</th>
+                            </tr>
+                        </thead>
 
-                            <tbody>  
+                        <tbody>  
 
-                            </tbody>
-                        </table>
+                        </tbody>
+                    </table>
 
                     <script>
                         var slots = '{{slots}}';
@@ -56,8 +66,6 @@
 
                         var events = '{{events}}';
                         events = events.replace('[', '').replace(']', '').split(', ');
-
-                        events = events
 
                         var $table_body = $('tbody');
                         var start_time = 6;
@@ -72,10 +80,9 @@
                             for (var j = 0; j < 7; j++) {
                                 slot = slots[(i*7)+j]
                                 if (slot == 0) {
-                                    row_html += '<td class="free"></td>';
+                                    row_html += '<td class="free table-light"></td>';
                                 } else if (slot == 1) {
-                                    print(events[slot])
-                                    row_html += '<td class="event">' + events[counter] + '</td>';
+                                    row_html += '<td class="event table-primary">' + events[counter] + '</td>';
                                     counter++;
                                 }
                             }
@@ -87,7 +94,7 @@
                         
                 </div>
 
-                <div class="col-2">
+                <div class="col-4">
                     Twitter stuff
                 </div>
             </div>
