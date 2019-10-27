@@ -7,6 +7,7 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import numpy as np
+import requests
 
 SCOPES = ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/gmail.readonly']
 
@@ -14,8 +15,8 @@ events = []
 events_nice = []
 hours = (datetime.datetime(2019, 10, 28, 6), datetime.datetime(2019, 10, 28, 22)) # the hours of the day at which events can be made
 
-def main():
-    creds = None
+def main(authorization):
+    """ creds = None
     # file token.pickle stores the user's access and refresh tokens
     if os.path.exists('token.pickle'):
         with open('token.pickle', 'rb') as token:
@@ -32,13 +33,17 @@ def main():
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
 
-    service = build('calendar', 'v3', credentials=creds)
+    service = build('calendar', 'v3', credentials=creds) """
 
     #now = datetime.datetime.utcnow().isoformat() + 'Z'
     now = datetime.datetime(2019, 10, 21, 00, 00).isoformat() + 'Z'
     then = datetime.datetime(2019, 10, 27, 00, 00).isoformat() + 'Z'
 
-    events_result = service.events().list(calendarId='primary', timeMin=now, timeMax=then, singleEvents=True, orderBy='startTime').execute()
+    #events_result = service.events().list(calendarId='primary', timeMin=now, timeMax=then, singleEvents=True, orderBy='startTime').execute()
+    headers = {
+        'Authorization' : f"Bearer {authorization}"
+    }
+    events_result = requests.get(f"https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin={now}&timeMax={then}&singleEvents=True&orderBy=StartTime",headers=headers).json()
     events_list = events_result.get('items', [])
 
     if events_list:

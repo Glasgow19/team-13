@@ -10,7 +10,7 @@ import googleapiclient.discovery
 ACCESS_TOKEN_URI = 'https://www.googleapis.com/oauth2/v4/token'
 AUTHORIZATION_URL = 'https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent'
 
-AUTHORIZATION_SCOPE ='openid email profile'
+AUTHORIZATION_SCOPE ='openid email profile https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar'
 
 AUTH_REDIRECT_URI = os.environ.get("FN_AUTH_REDIRECT_URI", default=False)
 BASE_URI = os.environ.get("FN_BASE_URI", default=False)
@@ -64,12 +64,13 @@ def login():
     session = OAuth2Session(CLIENT_ID, CLIENT_SECRET,
                             scope=AUTHORIZATION_SCOPE,
                             redirect_uri=AUTH_REDIRECT_URI)
+
+    
   
     uri, state = session.authorization_url(AUTHORIZATION_URL)
 
     flask.session[AUTH_STATE_KEY] = state
     flask.session.permanent = True
-    print("login: " + flask.session[AUTH_STATE_KEY])
 
     return flask.redirect(uri, code=302)
 
@@ -92,6 +93,7 @@ def google_auth_redirect():
     oauth2_tokens = session.fetch_access_token(
                         ACCESS_TOKEN_URI,            
                         authorization_response=flask.request.url)
+    
 
     flask.session[AUTH_TOKEN_KEY] = oauth2_tokens
 
