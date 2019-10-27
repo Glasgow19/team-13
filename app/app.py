@@ -18,14 +18,16 @@ def dashboard():
     twitterInfo = twitter.getCalendar('jalfrazi_')
     gmailInfo = gmail.getLastSent()
     labels = calUtils.getMonthLabels()
-
-    return render_template('dashboard.html', slots=s, events=e, twitterInfo=twitterInfo[::-1], gmailInfo=gmailInfo[::-1])
+    
+    return render_template('dashboard.html', slots=s, events=e, twitterInfo=twitterInfo[::-1], gmailInfo=gmailInfo[::-1], user_info=google_auth.get_user_info())
 
 
 @app.route('/')
 def index():
     if google_auth.is_logged_in():
-        return render_template('dashboard.html', user_info=google_auth.get_user_info())
+        return redirect('/dashboard')
+
+        #return render_template('dashboard.html', user_info=google_auth.get_user_info())
     else:
         return redirect('/google/login')
 

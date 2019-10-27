@@ -33,7 +33,8 @@
             <ul>
                 <li>
                     DASHBOARD
-                    <p style="font-size:12px">Welcome back</p>
+                    <p style="font-size:12px">Welcome back, {{ user_info['given_name'] }}</p>
+                    <a href="/google/logout" class="btn btn-sm btn-outline-light" style="margin-top: -25px;" role="button" aria-pressed="true">Logout</a>
                 </li>
             </ul>
         </div>
